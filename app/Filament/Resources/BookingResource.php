@@ -227,22 +227,15 @@ class BookingResource extends Resource
                     }),
                 
                     Tables\Columns\ImageColumn::make('bukti_bayar')
-                    ->label('Bukti Bayar')
-                    ->disk('public')
-                    ->height(60)
-                    ->width(60)
-                    ->square()
-                    ->defaultImageUrl(asset('images/no-image.svg'))
-                    ->extraAttributes([
-                        'class' => 'cursor-pointer border rounded-lg shadow-sm hover:shadow-md transition-shadow'
-                    ])
-                    ->action(function ($record) {
-                        // Open image in new tab when clicked
-                        if ($record->bukti_bayar) {
-                            return redirect()->away(asset('storage/' . $record->bukti_bayar));
-                        }
-                    })
-                    ->tooltip('Klik untuk melihat gambar penuh'),
+    ->label('Bukti Bayar')
+    ->size(60)
+    ->square()
+    ->extraAttributes([
+        'class' => 'cursor-pointer border rounded-lg shadow-sm hover:shadow-md transition-shadow'
+    ])
+    ->url(fn ($record) => $record->bukti_bayar ? asset('storage/' . $record->bukti_bayar) : null)
+    ->openUrlInNewTab()
+    ->tooltip('Klik untuk melihat gambar penuh'),
                 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat')
